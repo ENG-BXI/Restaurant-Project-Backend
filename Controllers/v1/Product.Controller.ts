@@ -1,4 +1,4 @@
-import {IProduct} from '@/Models/v1/Product.Model';
+import {IProduct, ProductZodSchema} from '@/Models/v1/Product.Model';
 import ProductServices from '@/Services/ProductServies.Services';
 import ParseErrorMessage from '@/Utils/ParseErrorMessage';
 import {type Request, type Response} from 'express';
@@ -22,8 +22,10 @@ async function getProductById(req: Request, res: Response) {
     const {id} = await req.params;
     if (!id) res.status(404).send({message: 'Id Cannot Be Found'});
     const product = await ProductServices.ProductById(id!);
+    const validation = ProductZodSchema.safeParse(product);
     if (!product) res.status(404).send({message: 'Cannot Found This Product'});
-    res.status(200).send(product);
+    if (validation.success) res.status(404).send({message: 'Cannot Found This Product', error: validation.error});
+    res.status(200).json({message: 'Get Product Successful', data: product});
   } catch (error) {
     res.status(400).json({message: 'Get Products Failed', error: ParseErrorMessage(error)});
   }
@@ -31,9 +33,11 @@ async function getProductById(req: Request, res: Response) {
 
 async function createProduct(req: Request, res: Response) {
   const product: IProduct = req.body;
-  if (!product || !product.imageUrl || !product.categoryId || !product.description || !product.price || !product.title)
+  const validation = ProductZodSchema.safeParse(product);
+  if (!validation.success)
     res.status(401).json({
-      message: 'Product Data inValid'
+      message: 'Product Data inValid',
+      error: validation.error
     });
   try {
     const newProduct = await ProductServices.CreateProduct(product);
@@ -52,12 +56,17 @@ async function createProduct(req: Request, res: Response) {
 
 async function editProduct(req: Request, res: Response) {
   const {id} = req.params;
-  const product: IProduct = req.body;
-
   if (!id) res.status(400).json({message: 'Id Not Found'});
+  const product: IProduct = req.body;
   if (!product.categoryId && !product.description && !product.imageUrl && !product.price && !product.title) res.status(400).json({message: 'Product Data inValid'});
-
   const editedProduct = await ProductServices.EditProduct(id, product);
+  const validation = ProductZodSchema.safeParse(editedProduct);
+  if (!validation.success)
+    res.status(200).json({
+      message: 'Edit Product Failed',
+      error: validation.error
+    });
+
   res.status(200).json({
     message: 'Edit Product Successful',
     data: editedProduct

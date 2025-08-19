@@ -28,7 +28,8 @@ async function Products(page: number, limit: number, sort: string, search?: stri
 async function ProductById(id: string) {
   try {
     const Product = await ProductModel.findUnique({
-      where: {id}
+      where: {id},
+      include: {Category: {select: {title: true}}}
     });
     return Product;
   } catch (error) {
@@ -48,6 +49,7 @@ async function CreateProduct(product: IProduct) {
       },
       include: {Category: true}
     });
+
     return Product;
   } catch (error) {
     throw new Error(JSON.stringify(error));

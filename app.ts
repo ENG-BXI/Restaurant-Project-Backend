@@ -1,6 +1,6 @@
 import express from 'express';
 import donEnv from 'dotenv';
-import v1Route from './Routes/v1/v1.Route';
+import v1Route from './Routes/v1/index.Route';
 import { V1_API } from './Constants/Route';
 donEnv.config();
 
@@ -14,9 +14,7 @@ app.use(express.json());
 app.use(V1_API, v1Route);
 
 app.listen(PORT, () => {
-  console.log('server is Running in Port ' + PORT);
+  console.log(`server is Running in https://localhost:${PORT}`);
 });
 
-// product
-// user
-// sections
+

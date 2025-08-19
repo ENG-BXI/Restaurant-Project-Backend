@@ -168,12 +168,12 @@ export type CategoryOrderByWithRelationInput = {
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  title?: string
   AND?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   OR?: Prisma.CategoryWhereInput[]
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
-  title?: Prisma.StringFilter<"Category"> | string
   Products?: Prisma.ProductListRelationFilter
-}, "id">
+}, "id" | "title">
 
 export type CategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

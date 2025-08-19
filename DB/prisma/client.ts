@@ -54,5 +54,15 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type Product = Prisma.ProductModel
+/**
+ * Model customerReview
+ * 
+ */
+export type customerReview = Prisma.customerReviewModel
+/**
+ * Model websiteSection
+ * 
+ */
+export type websiteSection = Prisma.websiteSectionModel
 
 
