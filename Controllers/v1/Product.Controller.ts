@@ -11,7 +11,9 @@ async function getProducts(req: Request, res: Response) {
     const sort = (query.sort as string) ?? 'title';
     const search = query.search as string | undefined;
     const products = await ProductServices.Products(page, limit, sort, search);
-    res.status(200).json({data: products, count: products.length});
+    const NumberOfProduct = await ProductServices.NumberOfProduct();
+    const numberOfPages = Math.ceil(NumberOfProduct / limit);
+    res.status(200).json({data: products, count: products.length, numberOfPages, page});
   } catch (error) {
     res.status(400).json({message: 'Get Products Failed', error: ParseErrorMessage(error)});
   }
@@ -24,7 +26,7 @@ async function getProductById(req: Request, res: Response) {
     const product = await ProductServices.ProductById(id!);
     const validation = ProductZodSchema.safeParse(product);
     if (!product) res.status(404).send({message: 'Cannot Found This Product'});
-    if (validation.success) res.status(404).send({message: 'Cannot Found This Product', error: validation.error});
+    if (!validation.success) res.status(404).send({message: 'Cannot Found This Product', error: validation.error});
     res.status(200).json({message: 'Get Product Successful', data: product});
   } catch (error) {
     res.status(400).json({message: 'Get Products Failed', error: ParseErrorMessage(error)});
@@ -32,15 +34,22 @@ async function getProductById(req: Request, res: Response) {
 }
 
 async function createProduct(req: Request, res: Response) {
-  const product: IProduct = req.body;
+  const product: IProduct = JSON.parse(req.body.data);
   const validation = ProductZodSchema.safeParse(product);
+  const imageFile = req.file;
+  console.log(imageFile);
+
+  if (!imageFile) {
+    res.status(400).json({message: 'Image Not Found'});
+    return;
+  }
   if (!validation.success)
     res.status(401).json({
       message: 'Product Data inValid',
       error: validation.error
     });
   try {
-    const newProduct = await ProductServices.CreateProduct(product);
+    const newProduct = await ProductServices.CreateProduct({...product, imageUrl: `${imageFile.destination}/${imageFile.filename}`});
     res.status(200).json({
       message: 'Create New Product Successful',
       data: newProduct
@@ -55,9 +64,12 @@ async function createProduct(req: Request, res: Response) {
 }
 
 async function editProduct(req: Request, res: Response) {
+  const imageFile = req.file;
   const {id} = req.params;
   if (!id) res.status(400).json({message: 'Id Not Found'});
-  const product: IProduct = req.body;
+  let product: IProduct = JSON.parse(req.body.data);
+  console.log(product);
+  if (imageFile) product = {...product, imageUrl: `${req.file?.destination}/${req.file?.filename}`};
   if (!product.categoryId && !product.description && !product.imageUrl && !product.price && !product.title) res.status(400).json({message: 'Product Data inValid'});
   const editedProduct = await ProductServices.EditProduct(id, product);
   const validation = ProductZodSchema.safeParse(editedProduct);

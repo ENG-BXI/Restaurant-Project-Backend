@@ -2,7 +2,7 @@ import {CategoryModel} from '@/Models/v1/Category.Model';
 
 async function getCategories() {
   try {
-    const Categories = CategoryModel.findMany();
+    const Categories = await CategoryModel.findMany();
     return Categories;
   } catch (error) {
     throw new Error(JSON.stringify(error));
@@ -16,7 +16,6 @@ async function createCategory(title: string) {
     throw new Error(JSON.stringify(error));
   }
 }
-
 async function getCategoryById(id: string) {
   try {
     const Category = await CategoryModel.findUnique({where: {id}, include: {Products: true}});
@@ -25,7 +24,6 @@ async function getCategoryById(id: string) {
     throw new Error(JSON.stringify(error));
   }
 }
-
 async function editCategory(id: string, title: string) {
   try {
     const editedCategory = await CategoryModel.update({where: {id}, data: {title}});

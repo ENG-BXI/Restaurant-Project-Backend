@@ -830,7 +830,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password'
+  password: 'password',
+  role: 'role'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -868,6 +869,8 @@ export type CustomerReviewScalarFieldEnum = (typeof CustomerReviewScalarFieldEnu
 
 export const WebsiteSectionScalarFieldEnum = {
   id: 'id',
+  order: 'order',
+  title: 'title',
   content: 'content'
 } as const
 
@@ -923,6 +926,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'USER_ROLE'
+ */
+export type EnumUSER_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'USER_ROLE'>
+    
+
+
+/**
+ * Reference to a field of type 'USER_ROLE[]'
+ */
+export type ListEnumUSER_ROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'USER_ROLE[]'>
     
 
 

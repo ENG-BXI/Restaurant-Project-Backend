@@ -24,7 +24,14 @@ async function Products(page: number, limit: number, sort: string, search?: stri
     throw new Error(JSON.stringify(error));
   }
 }
-
+async function NumberOfProduct() {
+  try {
+    const numberOfProduct = await ProductModel.count();
+    return numberOfProduct;
+  } catch (error) {
+    throw new Error(JSON.stringify(error));
+  }
+}
 async function ProductById(id: string) {
   try {
     const Product = await ProductModel.findUnique({
@@ -43,15 +50,15 @@ async function CreateProduct(product: IProduct) {
       data: {
         title: product.title,
         description: product.description,
-        imageUrl: product.imageUrl,
-        price: product.price,
+        imageUrl: product.imageUrl!,
+        price: Number(product.price),
         Category: {connect: {id: product.categoryId}}
       },
       include: {Category: true}
     });
-
     return Product;
   } catch (error) {
+    console.error(error);
     throw new Error(JSON.stringify(error));
   }
 }
@@ -72,7 +79,8 @@ async function EditProduct(id: string, product: IProduct) {
       title: product.title,
       description: product.description,
       imageUrl: product.imageUrl,
-      price: product.price
+      price: product.price,
+      categoryId: product.categoryId
     },
     include: {Category: true}
   });
@@ -81,6 +89,7 @@ async function EditProduct(id: string, product: IProduct) {
 
 const ProductServices = {
   Products,
+  NumberOfProduct,
   ProductById,
   CreateProduct,
   DeleteProduct,

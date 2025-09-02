@@ -65,4 +65,5 @@ export type customerReview = Prisma.customerReviewModel
  */
 export type websiteSection = Prisma.websiteSectionModel
 
-
+export type USER_ROLE = $Enums.USER_ROLE
+export const USER_ROLE = $Enums.USER_ROLE

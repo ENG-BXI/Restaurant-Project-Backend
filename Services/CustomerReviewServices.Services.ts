@@ -25,7 +25,6 @@ async function createCustomerReview(CustomerReview: ICustomerReview) {
     throw new Error(JSON.stringify(error));
   }
 }
-
 async function editCustomerReview(id: string, CustomerReview: ICustomerReview) {
   try {
     const editedCustomerReview = await CustomerReviewModel.update({where: {id}, data: CustomerReview});

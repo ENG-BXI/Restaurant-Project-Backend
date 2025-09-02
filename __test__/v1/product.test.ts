@@ -36,9 +36,9 @@ describe('v1 Api', () => {
       });
       //  Search
       it('should Return Product Has test title Or test Desorption Or test CategoryTitle ', async () => {
-        const {statusCode, body} = await supertest(app).get(`${V1_API}/products?search=test`);
+        const {statusCode, body} = await supertest(app).get(`${V1_API}/products?search=Food`);
         expect(statusCode).toEqual(200);
-        expect(body.data[0].title.includes('test') || body.data[0].description.includes('test') || body.data[0].Category.title.includes('test')).toEqual(true);
+        expect(body.data[0].title.includes('Food') || body.data[0].description.includes('Food') || body.data[0].Category.title.includes('Food')).toEqual(true);
       });
 
       it("should Return (Empty List) When Product hasn't test123 title Or test Desorption Or test CategoryTitle ", async () => {

@@ -19,35 +19,65 @@ export type websiteSectionModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateWebsiteSection = {
   _count: WebsiteSectionCountAggregateOutputType | null
+  _avg: WebsiteSectionAvgAggregateOutputType | null
+  _sum: WebsiteSectionSumAggregateOutputType | null
   _min: WebsiteSectionMinAggregateOutputType | null
   _max: WebsiteSectionMaxAggregateOutputType | null
 }
 
+export type WebsiteSectionAvgAggregateOutputType = {
+  order: number | null
+}
+
+export type WebsiteSectionSumAggregateOutputType = {
+  order: number | null
+}
+
 export type WebsiteSectionMinAggregateOutputType = {
   id: string | null
+  order: number | null
+  title: string | null
 }
 
 export type WebsiteSectionMaxAggregateOutputType = {
   id: string | null
+  order: number | null
+  title: string | null
 }
 
 export type WebsiteSectionCountAggregateOutputType = {
   id: number
+  order: number
+  title: number
   content: number
   _all: number
 }
 
 
+export type WebsiteSectionAvgAggregateInputType = {
+  order?: true
+}
+
+export type WebsiteSectionSumAggregateInputType = {
+  order?: true
+}
+
 export type WebsiteSectionMinAggregateInputType = {
   id?: true
+  order?: true
+  title?: true
 }
 
 export type WebsiteSectionMaxAggregateInputType = {
   id?: true
+  order?: true
+  title?: true
 }
 
 export type WebsiteSectionCountAggregateInputType = {
   id?: true
+  order?: true
+  title?: true
   content?: true
   _all?: true
 }
@@ -90,6 +120,18 @@ export type WebsiteSectionAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: WebsiteSectionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: WebsiteSectionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: WebsiteSectionMinAggregateInputType
@@ -120,14 +162,20 @@ export type websiteSectionGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: WebsiteSectionCountAggregateInputType | true
+  _avg?: WebsiteSectionAvgAggregateInputType
+  _sum?: WebsiteSectionSumAggregateInputType
   _min?: WebsiteSectionMinAggregateInputType
   _max?: WebsiteSectionMaxAggregateInputType
 }
 
 export type WebsiteSectionGroupByOutputType = {
   id: string
+  order: number
+  title: string
   content: runtime.JsonValue
   _count: WebsiteSectionCountAggregateOutputType | null
+  _avg: WebsiteSectionAvgAggregateOutputType | null
+  _sum: WebsiteSectionSumAggregateOutputType | null
   _min: WebsiteSectionMinAggregateOutputType | null
   _max: WebsiteSectionMaxAggregateOutputType | null
 }
@@ -152,28 +200,38 @@ export type websiteSectionWhereInput = {
   OR?: Prisma.websiteSectionWhereInput[]
   NOT?: Prisma.websiteSectionWhereInput | Prisma.websiteSectionWhereInput[]
   id?: Prisma.StringFilter<"websiteSection"> | string
+  order?: Prisma.IntFilter<"websiteSection"> | number
+  title?: Prisma.StringFilter<"websiteSection"> | string
   content?: Prisma.JsonFilter<"websiteSection">
 }
 
 export type websiteSectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   content?: Prisma.SortOrder
 }
 
 export type websiteSectionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  order?: number
+  title?: string
   AND?: Prisma.websiteSectionWhereInput | Prisma.websiteSectionWhereInput[]
   OR?: Prisma.websiteSectionWhereInput[]
   NOT?: Prisma.websiteSectionWhereInput | Prisma.websiteSectionWhereInput[]
   content?: Prisma.JsonFilter<"websiteSection">
-}, "id">
+}, "id" | "order" | "title">
 
 export type websiteSectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   content?: Prisma.SortOrder
   _count?: Prisma.websiteSectionCountOrderByAggregateInput
+  _avg?: Prisma.websiteSectionAvgOrderByAggregateInput
   _max?: Prisma.websiteSectionMaxOrderByAggregateInput
   _min?: Prisma.websiteSectionMinOrderByAggregateInput
+  _sum?: Prisma.websiteSectionSumOrderByAggregateInput
 }
 
 export type websiteSectionScalarWhereWithAggregatesInput = {
@@ -181,86 +239,126 @@ export type websiteSectionScalarWhereWithAggregatesInput = {
   OR?: Prisma.websiteSectionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.websiteSectionScalarWhereWithAggregatesInput | Prisma.websiteSectionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"websiteSection"> | string
+  order?: Prisma.IntWithAggregatesFilter<"websiteSection"> | number
+  title?: Prisma.StringWithAggregatesFilter<"websiteSection"> | string
   content?: Prisma.JsonWithAggregatesFilter<"websiteSection">
 }
 
 export type websiteSectionCreateInput = {
   id?: string
+  order: number
+  title: string
   content: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionUncheckedCreateInput = {
   id?: string
+  order: number
+  title: string
   content: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionCreateManyInput = {
   id?: string
+  order: number
+  title: string
   content: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type websiteSectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   content?: Prisma.SortOrder
+}
+
+export type websiteSectionAvgOrderByAggregateInput = {
+  order?: Prisma.SortOrder
 }
 
 export type websiteSectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  title?: Prisma.SortOrder
 }
 
 export type websiteSectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  title?: Prisma.SortOrder
+}
+
+export type websiteSectionSumOrderByAggregateInput = {
+  order?: Prisma.SortOrder
 }
 
 
 
 export type websiteSectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  order?: boolean
+  title?: boolean
   content?: boolean
 }, ExtArgs["result"]["websiteSection"]>
 
 export type websiteSectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  order?: boolean
+  title?: boolean
   content?: boolean
 }, ExtArgs["result"]["websiteSection"]>
 
 export type websiteSectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  order?: boolean
+  title?: boolean
   content?: boolean
 }, ExtArgs["result"]["websiteSection"]>
 
 export type websiteSectionSelectScalar = {
   id?: boolean
+  order?: boolean
+  title?: boolean
   content?: boolean
 }
 
-export type websiteSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content", ExtArgs["result"]["websiteSection"]>
+export type websiteSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "order" | "title" | "content", ExtArgs["result"]["websiteSection"]>
 
 export type $websiteSectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "websiteSection"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    order: number
+    title: string
     content: runtime.JsonValue
   }, ExtArgs["result"]["websiteSection"]>
   composites: {}
@@ -686,6 +784,8 @@ export interface Prisma__websiteSectionClient<T, Null = never, ExtArgs extends r
  */
 export interface websiteSectionFieldRefs {
   readonly id: Prisma.FieldRef<"websiteSection", 'String'>
+  readonly order: Prisma.FieldRef<"websiteSection", 'Int'>
+  readonly title: Prisma.FieldRef<"websiteSection", 'String'>
   readonly content: Prisma.FieldRef<"websiteSection", 'Json'>
 }
     
