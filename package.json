@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon",
+    "start": "nodemon --omit=dev",
     "test": "jest"
   },
   "type": "commonjs",
