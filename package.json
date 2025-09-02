@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "node app.ts",
-    "dev": "nodemon app.ts --omit=dev",
+    "start": "ts-node app.ts",
+    "dev": "nodemon --exec ts-node app.ts",
     "test": "jest"
   },
   "type": "commonjs",
