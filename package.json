@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "start": "ts-node app.ts",
-    "dev": "nodemon --exec ts-node app.ts",
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register app.ts",
+    "build": "tsc",
+    "start": "node -r tsconfig-paths/register dist/app.js",
     "test": "jest"
   },
   "type": "commonjs",
